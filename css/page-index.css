@@ -1,0 +1,211 @@
+/*
+ * 在这里编辑主页的样式表
+ */
+
+/*
+ * 设置body
+ */
+body{
+	/*设置body的背景图片，水平方向重复*/
+	background: url(../img/bd-bg.png) repeat-x;
+}
+
+/*
+ * 解决高度塌陷问题clearfix
+ */
+.clearfix:before,
+.clearfix:after{
+	content: "";
+	display: table;
+	clear: both;
+}
+
+.clearfix{
+	zoom:1;
+}
+
+/*
+ * 固定元素的宽度和居中
+ */
+.w{
+	width: 980px;
+	margin: 0 auto;
+}
+
+/*设置header*/
+.header{
+	/*background-color: #bfa;*/
+	/*设置一个上内边距*/
+	padding-top: 40px;
+	/*设置一个下内边距*/
+	padding-bottom: 50px;
+}
+
+/*设置logo的位置*/
+.logo{
+	margin-left: 1px;
+}
+
+/*
+ * 设置导航条
+ */
+.nav{
+	/*设置向右浮动*/
+	float: right;
+	/*设置一个上外边距*/
+	margin-top: 22px;
+}
+
+.nav li{
+	/*设置向左浮动*/
+	float: left;
+	/*设置左右内边距*/
+	padding: 0 10px 8px;
+	/*设置左边框*/
+	border-left: 1px #d6d6d6 dotted;
+}
+
+/*设置导航条中的超链接*/
+.nav a{
+	/*设置字体颜色*/
+	color: #666;
+	/*设置字体*/
+	font: bold 20px Georgia;
+	/*去除下划线*/
+	text-decoration: none;
+	
+}
+
+/*设置超链接的移入效果*/
+.nav a:hover{
+	color: #a1a1a1;
+	text-decoration: underline;
+}
+
+
+/*
+ * 设置导航中的小标题
+ * 在chrome浏览器中字体最小支持到12px
+ * 	1-11都显示为12px
+ */
+.nav p{
+	/*字体颜色*/
+	color: #b7b7b7;
+	/*字体大小*/
+	font: 12px tahoma;
+}
+
+/*
+ * 设置banner
+ */
+.banner{
+	/*设置高度*/
+	top: 5px;
+	height: 464px;
+	/*设置背景*/
+	background: url(../img/banner-bg.png) no-repeat bottom center;
+	/*开启一个相对定位*/
+	position: relative;
+	overflow:hidden;
+	width: 800px;
+}
+
+.imgList{
+	list-style: none;
+	/*设置ul的宽度*/
+	height:451px;
+	/*开启绝对定位*/
+	position: absolute;
+	left: 0px;
+	/*设置偏移量*/
+	/*
+	* 每向左移动520px，就会显示到下一张图片
+	*/
+}
+	
+
+
+.imgLeft{
+	position: absolute;
+	top: 160px;
+	left:0px;
+	opacity: 0;
+}
+
+
+.imgList li{
+	/*设置浮动*/
+	float: left;
+	/*设置左右外边距*/
+}
+
+
+
+
+/*设置content部分*/
+
+.content h1{
+	/*设置文本居中*/
+	text-align: center;
+	/*设置字体*/
+	font: bold 16px Georgia;
+	/*设置上内边距*/
+	padding: 14px 0 20px 0;
+	/*设置一个下外边距*/
+	margin-bottom: 38px;
+	/*设置背景*/
+	background: url(../img/line.png) no-repeat bottom center;
+}
+
+
+
+/*设置底部*/
+.footer{
+	height: 80px;
+	background: #333;
+	/*设置上边框*/
+	border-top: 10px solid #4c4c4c;
+}
+
+/*
+ * 设置底部的文字的样式
+ */
+.footer a , .footer p{
+	color: #999;
+	font: 11px Helvetica ;
+	text-decoration: none;
+}
+
+/*
+ * 设置a元素的hover
+ */
+.footer a:hover{
+	color: #cccaca;
+	text-decoration: underline;
+}
+
+.footer p{
+	margin-left: 8px;
+	margin-right: 23px;
+	margin-bottom: 6px;
+}
+
+.footer .w{
+	padding-top:18px ;
+}
+
+.footer .copy{
+	float: right;
+	/*处理双倍边距的bug*/
+	display: inline;
+}
+
+.publicatins p{
+	line-height:3.5;
+}
+.publicatins li{
+	line-height:1.5;
+}
+.publicatins{
+	margin: 0 20px;
+}

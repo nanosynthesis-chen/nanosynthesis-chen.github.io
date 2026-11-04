@@ -1,0 +1,118 @@
+body{
+	/*设置body的背景图片，水平方向重复*/
+	background: url(../img/bd-bg.png) repeat-x;
+}
+
+/*
+ * 解决高度塌陷问题clearfix
+ */
+.clearfix:before,
+.clearfix:after{
+	content: "";
+	display: table;
+	clear: both;
+}
+
+.clearfix{
+	zoom:1;
+}
+
+/*
+ * 固定元素的宽度和居中
+ */
+.w{
+	width: 980px;
+	margin: 0 auto;
+}
+
+/*设置header*/
+.header{
+	/*background-color: #bfa;*/
+	/*设置一个上内边距*/
+	padding-top: 40px;
+	/*设置一个下内边距*/
+
+}
+
+/*设置logo的位置*/
+.logo{
+	margin-left: 1px;
+}
+
+/*
+ * 设置导航条
+ */
+.nav{
+	/*设置向右浮动*/
+	float: right;
+	/*设置一个上外边距*/
+	margin-top: 22px;
+}
+
+.nav li{
+	/*设置向左浮动*/
+	float: left;
+	/*设置左右内边距*/
+	padding: 0 10px 8px;
+	/*设置左边框*/
+	border-left: 1px #d6d6d6 dotted;
+}
+
+/*设置导航条中的超链接*/
+.nav a{
+	/*设置字体颜色*/
+	color: #666;
+	/*设置字体*/
+	font: bold 20px Georgia;
+	/*去除下划线*/
+	text-decoration: none;
+	
+}
+
+/*设置超链接的移入效果*/
+.nav a:hover{
+	color: #a1a1a1;
+	text-decoration: underline;
+}
+
+/*
+ * 设置导航中的小标题
+ * 在chrome浏览器中字体最小支持到12px
+ * 	1-11都显示为12px
+ */
+.nav p{
+	/*字体颜色*/
+	color: #b7b7b7;
+	/*字体大小*/
+	font: 12px tahoma;
+}
+
+#album{
+	height: 60px;
+	background: #EBEBEB;
+}
+
+#album a:hover {
+	color: #444444;
+
+}
+#album a{
+	color: #A1A1A1;
+	font: bold 20px Georgia;
+	text-decoration: none;
+	line-heigh: 2;
+	float: left;
+	padding: 20px 20px 10px;
+}
+
+.IAS{
+		background-color: #11719E;
+}
+.back{
+	color: #666;
+		/*设置字体*/
+		font: 16px Georgia;
+		/*去除下划线*/
+		text-decoration: none;
+	}
+}

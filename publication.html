@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>学术成果 · Publications</title>
+    <link rel="stylesheet" type="text/css" href="css/reset-min.css" />
+    <link rel="stylesheet" type="text/css" href="css/site-beautified.css" />
+    <style>
+        /* ===== 竖向六板块布局 ===== */
+        .pub-columns-wrap {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 10px 64px 56px;
+        }
+        .pub-columns {
+            display: flex;
+            gap: 20px;
+            height: 66vh;
+            min-height: 540px;
+        }
+        .pub-col {
+            position: relative;
+            flex: 1 1 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 34px 26px 30px;
+            border-radius: 18px;
+            text-decoration: none;
+            color: #fff;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(13, 40, 80, .14);
+            transition: transform .32s ease, box-shadow .32s ease;
+            /* 进场初始状态 */
+            opacity: 0;
+            transform: translateY(36px);
+        }
+        .pub-col.in {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity .7s ease, transform .55s cubic-bezier(.22,.8,.3,1), box-shadow .32s ease;
+        }
+        /* 六条板块由浅入深的蓝色渐变，代表时间沉淀 */
+        .pub-col.c1 { background: linear-gradient(168deg, #5b8fd6 0%, #3a67b2 100%); }
+        .pub-col.c2 { background: linear-gradient(168deg, #4f7fc9 0%, #2f56a5 100%); }
+        .pub-col.c3 { background: linear-gradient(168deg, #4471bd 0%, #264795 100%); }
+        .pub-col.c4 { background: linear-gradient(168deg, #3b68ad 0%, #1e3a82 100%); }
+        .pub-col.c5 { background: linear-gradient(168deg, #32579b 0%, #17306e 100%); }
+        .pub-col.c6 { background: linear-gradient(168deg, #294686 0%, #10265a 100%); }
+
+        /* 顶部光泽，hover 时轻微流动 */
+        .pub-col::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,.10) 50%, transparent 70%);
+            transform: translateX(-100%);
+            transition: transform .9s ease;
+            pointer-events: none;
+        }
+        .pub-col:hover::after { transform: translateX(100%); }
+
+        .pub-col:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 22px 44px rgba(13, 40, 80, .26);
+            color: #fff;
+        }
+
+        .pub-col-year {
+            position: absolute;
+            top: 26px;
+            left: 24px;
+            right: 24px;
+            font-size: 30px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            line-height: 1.15;
+            opacity: 0;
+            transform: translateY(14px);
+            transition: opacity .5s ease .18s, transform .5s ease .18s;
+        }
+        .pub-col.in .pub-col-year { opacity: 1; transform: translateY(0); }
+
+        .pub-col-era {
+            display: block;
+            margin-top: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            opacity: .82;
+        }
+        .pub-col-body {
+            opacity: 0;
+            transform: translateY(14px);
+            transition: opacity .5s ease .34s, transform .5s ease .34s;
+        }
+        .pub-col.in .pub-col-body { opacity: 1; transform: translateY(0); }
+
+        .pub-col-desc {
+            display: block;
+            font-size: 13.5px;
+            line-height: 1.75;
+            opacity: .92;
+        }
+        .pub-col-arrow {
+            display: inline-block;
+            margin-top: 16px;
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            transition: transform .3s ease;
+        }
+        .pub-col:hover .pub-col-arrow { transform: translateX(8px); }
+
+        /* 标题区 */
+        .publication-region { padding-top: 46px; }
+        .pub-page-head { text-align: center; }
+
+        /* 窄屏降级：两行三列 -> 单列 */
+        @media (max-width: 1100px) {
+            .pub-columns-wrap { padding: 10px 28px 48px; }
+            .pub-columns { flex-wrap: wrap; height: auto; }
+            .pub-col { flex: 1 1 30%; min-height: 300px; }
+        }
+        @media (max-width: 640px) {
+            .pub-columns { flex-direction: column; }
+            .pub-col { min-height: 220px; }
+        }
+
+        /* 尊重系统减弱动效设置 */
+        @media (prefers-reduced-motion: reduce) {
+            .pub-col, .pub-col-year, .pub-col-body, .pub-col::after { transition: none !important; }
+            .pub-col, .pub-col-year, .pub-col-body { opacity: 1 !important; transform: none !important; }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <a class="site-brand" href="index.html">
+      <img src="img/nano.bmp" alt="西湖大学" />
+      <span class="site-brand-text">
+        <strong>The Nanosynthesis Consortium</strong>
+        <small>西湖纳米合成实验室</small>
+      </span>
+    </a>
+    <nav class="site-nav"><a class="site-nav-link" href="index.html"><span class="nav-main">首页</span><span class="nav-sub">Home</span></a><a class="site-nav-link" href="chy.html"><span class="nav-main">成员名单</span><span class="nav-sub">Members</span></a><a class="site-nav-link active" href="publication.html"><span class="nav-main">学术成果</span><span class="nav-sub">Publications</span></a><a class="site-nav-link" href="album.html"><span class="nav-main">相册</span><span class="nav-sub">Album</span></a><a class="site-nav-link" href="contact.html"><span class="nav-main">联系方式</span><span class="nav-sub">Contact</span></a></nav>
+  </div>
+</header>
+
+<div class="publication-region">
+    <div class="pub-page-head">
+        <h1 class="publication-region-title">学术成果 <br><span style="font-size:18px;font-weight:500;color:var(--muted);letter-spacing:2px;">PUBLICATIONS BY DECADE</span></h1>
+
+        <div class="publication-retro" style="text-align:center;margin:14px 0 30px;">
+            <a style="display:inline-block;margin:6px 10px;" class="retro-zh" href="20years-retrospective-zh.html">建组二十年回顾</a>
+            <a style="display:inline-block;margin:6px 10px;" class="retro-en" href="20years-retrospective-en.html">20-Year Group Retrospective</a>
+        </div>
+    </div>
+
+    <div class="pub-columns-wrap">
+        <div class="pub-columns" id="pubColumns">
+            <a class="pub-col c1" href="publication-2026.html">
+                <span class="pub-col-year">2026–Now
+                    <span class="pub-col-era">Current / 2026至今</span>
+                </span>
+                <span class="pub-col-body">
+                    <span class="pub-col-desc">最新发表与接收中的工作，包括 ICML、ACS Nano、Angewandte 等。</span>
+                    <span class="pub-col-arrow">进入 →</span>
+                </span>
+            </a>
+            <a class="pub-col c2" href="publication-2021-2025.html">
+                <span class="pub-col-year">2021–2025
+                    <span class="pub-col-era">西湖大学时期 / Westlake Era</span>
+                </span>
+                <span class="pub-col-body">
+                    <span class="pub-col-desc">迁入西湖大学后的代表性成果，涵盖活性表面生长、手性纳米结构、电化学合成等方向。</span>
+                    <span class="pub-col-arrow">进入 →</span>
+                </span>
+            </a>
+            <a class="pub-col c3" href="publication-2016-2020.html">
+                <span class="pub-col-year">2016–2020
+                    <span class="pub-col-era">南洋理工大学时期 / NTU Era</span>
+                </span>
+                <span class="pub-col-body">
+                    <span class="pub-col-desc">在南洋理工大学开展的系统研究，奠定活性表面生长理论与空心多壳结构合成方法。</span>
+                    <span class="pub-col-arrow">进入 →</span>
+                </span>
+            </a>
+            <a class="pub-col c4" href="publication-2011-2015.html">
+                <span class="pub-col-year">2011–2015
+                    <span class="pub-col-era">早期发展 / Early Growth</span>
+                </span>
+                <span class="pub-col-body">
+                    <span class="pub-col-desc">贵金属纳米晶体生长机理研究深入，结构控制与合成化学的系统建立。</span>
+                    <span class="pub-col-arrow">进入 →</span>
+                </span>
+            </a>
+            <a class="pub-col c5" href="publication-2006-2010.html">
+                <span class="pub-col-year">2006–2010
+                    <span class="pub-col-era">体系建立 / Lab Foundations</span>
+                </span>
+                <span class="pub-col-body">
+                    <span class="pub-col-desc">胶体纳米晶体合成方法学与组装策略的初创阶段。</span>
+                    <span class="pub-col-arrow">进入 →</span>
+                </span>
+            </a>
+            <a class="pub-col c6" href="publication-2001-2005.html">
+                <span class="pub-col-year">2001–2005
+                    <span class="pub-col-era">建组初期 / Group Origins</span>
+                </span>
+                <span class="pub-col-body">
+                    <span class="pub-col-desc">从生物无机化学起步，逐步拓展到纳米合成领域的早期探索。</span>
+                    <span class="pub-col-arrow">进入 →</span>
+                </span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <p>&copy; 2026 The Nanosynthesis Consortium. All rights reserved.</p>
+    <nav class="site-nav"><a class="site-nav-link" href="index.html"><span class="nav-main">首页</span><span class="nav-sub">Home</span></a><a class="site-nav-link" href="chy.html"><span class="nav-main">成员名单</span><span class="nav-sub">Members</span></a><a class="site-nav-link active" href="publication.html"><span class="nav-main">学术成果</span><span class="nav-sub">Publications</span></a><a class="site-nav-link" href="album.html"><span class="nav-main">相册</span><span class="nav-sub">Album</span></a><a class="site-nav-link" href="contact.html"><span class="nav-main">联系方式</span><span class="nav-sub">Contact</span></a></nav>
+  </div>
+</footer>
+
+<script>
+// 进场动效：六条板块依次淡入上浮（间隔 110ms），板块内年份与简介随后延迟出现
+(function () {
+    var cols = document.querySelectorAll('#pubColumns .pub-col');
+    cols.forEach(function (col, i) {
+        setTimeout(function () { col.classList.add('in'); }, 120 + i * 110);
+    });
+})();
+</script>
+<script type="text/javascript" src="js/site-lightbox.js"></script>
+<script type="text/javascript" src="js/site-backtop.js"></script>
+
+</body>
+</html>

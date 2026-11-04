@@ -1,0 +1,38 @@
+.con{
+	padding:0 20%;
+}
+.con h1{
+	color: #444;
+		font: 24px/1 georgia;
+		/**
+		 * 设置下边框
+		 */
+		border-bottom: 1px dashed #d3d3d3;
+		/*
+		 * 设置内边距
+		 */
+		padding: 25px 0px;
+		/*设置一个下外边距*/
+		margin-bottom: 15px;
+}
+.con p{
+	font: 24px/1 helvetica;
+	height: 60px;
+	/*单独为IE6设置一个高度*/
+	_height: 60px;
+	/**
+	 * 设置下边框
+	 */
+	border-bottom: 1px dashed #d3d3d3;
+	
+	margin-bottom: 14px;
+	padding-bottom: 9px;
+}
+
+
+
+.con img{
+	/*设置向左浮动*/
+	float: left;
+	margin-right: 8px;
+	
