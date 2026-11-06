@@ -38,6 +38,12 @@ body{
     min-height:100vh;
 }
 
+/* flex 容器中带 auto 左右边距的元素不会被拉伸，这里统一给顶层区块满宽，
+   再由各自的 max-width 居中，避免内容被压缩变窄 */
+body > *{
+    width:100%;
+}
+
 img{
     max-width:100%;
     height:auto;
