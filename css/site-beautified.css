@@ -32,6 +32,10 @@ body{
     font-family:"Segoe UI","PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif;
     line-height:1.75;
     overflow-x:hidden;
+    /* 让页脚始终贴底：内容不足时把页脚推到视口底部 */
+    display:flex;
+    flex-direction:column;
+    min-height:100vh;
 }
 
 img{
@@ -190,11 +194,11 @@ a:hover{
    新页脚
    ========================================================================== */
 .site-footer{
-    margin-top:60px;
+    margin-top:auto;
     background:#243c36;
     color:#dce8e3;
     border-top:6px solid var(--primary);
-    padding:42px 24px;
+    padding:48px 24px 42px;
 }
 
 .site-footer-inner{
@@ -1568,4 +1572,21 @@ span[style*="position: fixed"],
 @media (max-width: 768px) {
     .pub-side-panel{ display: none; }
     .publication-region{ margin: 16px; padding: 18px; max-width: 100%; border-radius: 14px; }
+}
+
+/* ==========================================================================
+   大屏适配：外接显示器 / 高分屏下避免内容显得过小、过空
+   ========================================================================== */
+@media (min-width: 1600px) {
+    .site-header-inner,
+    .site-footer-inner {
+        max-width: 1460px;
+    }
+    #banner.banner {
+        max-width: 1600px;
+        height: clamp(620px, 66vh, 940px);
+    }
+    #banner .imgList {
+        height: clamp(620px, 66vh, 940px) !important;
+    }
 }
