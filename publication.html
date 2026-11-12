@@ -103,6 +103,21 @@
 </head>
 
 <body>
+<script>
+/* 保险：如果是从收藏夹/地址栏直接进到学术成果页（本次会话首次打开、且不是站内跳转），自动回首页 */
+(function () {
+    try {
+        if (sessionStorage.getItem('ns_home_guard') === '1') { return; }
+        var ref = document.referrer || '';
+        var fromSite = ref.indexOf(location.host) !== -1;
+        if (!fromSite && !location.search && !location.hash) {
+            location.replace('index.html');
+            return;
+        }
+        sessionStorage.setItem('ns_home_guard', '1');
+    } catch (e) { }
+})();
+</script>
 
 <header class="site-header">
   <div class="site-header-inner">
