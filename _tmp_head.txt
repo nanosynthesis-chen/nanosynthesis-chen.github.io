@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>学术成果 · Publications</title>
+    <link rel="stylesheet" type="text/css" href="css/reset-min.css" />
+    <link rel="stylesheet" type="text/css" href="css/site-beautified.css" />
+    <style>
+        .pub-decade-grid {
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+            gap:26px;
+            max-width:960px;
+            margin:0 auto;
+            padding:20px 0 40px;
+        }
+        .pub-decade-card{
+            position:relative;
+            display:block;
+            background:#ffffff;
+            border:1px solid var(--line);
+            border-radius:20px;
+            padding:28px 26px;
+            box-shadow:var(--shadow-sm);
+            transition:transform .28s ease, box-shadow .28s ease, border-color .28s ease;
+            text-decoration:none;
+            color:inherit;
+            overflow:hidden;
+        }
+        .pub-decade-card::before{
+            content:"";
+            position:absolute;
+            top:0;left:0;right:0;
+            height:6px;
+            background:linear-gradient(90deg,var(--primary),var(--accent));
+        }
+        .pub-decade-card:hover{
+            transform:translateY(-6px);
+            box-shadow:var(--shadow);
+            border-color:var(--primary-2);
+            color:inherit;
+        }
+        .pub-decade-card .decade-num{
+            font-size:34px;
+            font-weight:800;
+            color:var(--primary);
+            letter-spacing:1px;
+            line-height:1.1;
+        }
+        .pub-decade-card .decade-en{
+            display:block;
+            margin-top:6px;
+            font-size:14px;
+            font-weight:600;
+            color:var(--muted);
+            letter-spacing:.5px;
+        }
+        .pub-decade-card .decade-desc{
+            display:block;
+            margin-top:16px;
+            font-size:14px;
+            color:var(--text);
+            line-height:1.7;
+            opacity:.85;
+        }
+        .pub-decade-card .decade-arrow{
+            position:absolute;
+            right:22px;
+            bottom:22px;
+            font-size:20px;
+            color:var(--primary);
+            font-weight:700;
+            transition:transform .28s ease;
+        }
+        .pub-decade-card:hover .decade-arrow{
+            transform:translateX(6px);
+        }
+    </style>
+
+<style type="text/css">
+    .item_line { display: flex; flex-wrap: wrap; font-size: 1.6rem !important; margin-bottom: 24px; }
+    .img_box { width: 280px !important; margin: 10px auto 30px !important; }
+    .img_box>img { width: 100% !important; height: 100% !important; }
+    .face_img { width: 280px; }
+    .left_box { max-width: 100%; overflow-wrap: break-word; word-break: break-word; flex: 1; }
+    .pub_publish { font-style: italic !important; }
+    .pub_doi { color: #4289ff; font-weight: 800; }
+</style>
+</head>
