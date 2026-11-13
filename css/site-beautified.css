@@ -282,10 +282,10 @@ a:hover{
     border-radius:999px;
     background:var(--primary);
     pointer-events:none;
-    transition:left .34s cubic-bezier(.22,.61,.36,1),
-               top .34s cubic-bezier(.22,.61,.36,1),
-               width .34s cubic-bezier(.22,.61,.36,1),
-               height .34s cubic-bezier(.22,.61,.36,1);
+    transition:left .62s cubic-bezier(.16,.84,.3,1),
+               top .62s cubic-bezier(.16,.84,.3,1),
+               width .62s cubic-bezier(.16,.84,.3,1),
+               height .62s cubic-bezier(.16,.84,.3,1);
 }
 .nav-fly-pill-site{
     border-radius:12px;
@@ -1151,13 +1151,30 @@ a.contact-value:hover{
     object-fit:contain;
 }
 
-/* 个人简历 / 研究方向：标题上下间距统一 */
-p:has(> b > span[style*="009900"]),
-p:has(> strong > span[style*="009900"]){
+/* 个人简历 / 研究方向 / 学术成果 / 现小组成员 / 往届成员：标题上下间距统一 */
+p:has(> :is(b,strong) > span[style*="009900"]),
+p:has(> :is(b,strong) > span[style*="rgb(0, 153, 0)"]),
+p:has(> :is(b,strong) > span[style*="rgb(0,153,0)"]) {
     margin-top:28px !important;
     margin-bottom:0 !important;
 }
-p:has(+ hr):not(:has(span[style*="009900"])){
+
+/* 五个板块标题的字号、字体、颜色、粗细统一 */
+p:has(> :is(b,strong) > span[style*="009900"]) > :is(b,strong),
+p:has(> :is(b,strong) > span[style*="rgb(0, 153, 0)"]) > :is(b,strong),
+p:has(> :is(b,strong) > span[style*="rgb(0,153,0)"]) > :is(b,strong) {
+    font-weight:500 !important;
+}
+p:has(> :is(b,strong) > span[style*="009900"]) > :is(b,strong) > span,
+p:has(> :is(b,strong) > span[style*="rgb(0, 153, 0)"]) > :is(b,strong) > span,
+p:has(> :is(b,strong) > span[style*="rgb(0,153,0)"]) > :is(b,strong) > span {
+    font-family:"Microsoft YaHei","微软雅黑",sans-serif !important;
+    font-size:18px !important;
+    line-height:1.6 !important;
+    color:#009900 !important;
+    font-weight:500 !important;
+}
+p:has(+ hr):not(:has(span[style*="009900"])):not(:has(span[style*="rgb(0, 153, 0)"])):not(:has(span[style*="rgb(0,153,0)"])){
     margin:0 !important;
     padding:0;
     font-size:0;
@@ -1165,7 +1182,9 @@ p:has(+ hr):not(:has(span[style*="009900"])){
 }
 
 /* 个人简历 / 研究方向：标题上方只含换行的空段落直接隐藏，保证各页面间距一致 */
-p:has(br):has(+ p:has(span[style*="009900"])){
+p:has(br):has(+ p:has(span[style*="009900"])),
+p:has(br):has(+ p:has(span[style*="rgb(0, 153, 0)"])),
+p:has(br):has(+ p:has(span[style*="rgb(0,153,0)"])){
     display:none !important;
 }
 

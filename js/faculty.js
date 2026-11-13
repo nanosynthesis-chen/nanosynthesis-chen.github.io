@@ -90,6 +90,13 @@ function initNavs(){
 		pill.style.top=(rOld.top-navRect.top)+'px';
 		pill.style.width=rOld.width+'px';
 		pill.style.height=rOld.height+'px';
+
+		/* 按位移距离换算时长，让三个导航栏的滑动速度保持一致
+		   （以顶部主导航一格（约 100px / 0.62s）的速度为基准） */
+		var dist=Math.abs((rNew.left+rNew.width/2)-(rOld.left+rOld.width/2));
+		var dur=Math.max(0.45, Math.min(1.35, dist*0.0062));
+		pill.style.transitionDuration=dur+'s';
+
 		nav.appendChild(pill);
 		nav.className += ' nav-flying';
 
@@ -103,7 +110,7 @@ function initNavs(){
 		setTimeout(function(){
 			if(pill.parentNode) pill.parentNode.removeChild(pill);
 			nav.className = nav.className.replace(' nav-flying','');
-		}, 400);
+		}, dur*1000+120);
 	}
 
 	for(var k=0;k<navs.length;k++){ initNav(navs[k]); }
