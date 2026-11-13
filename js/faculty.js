@@ -49,7 +49,9 @@ function initNavs(){
 		/* 绿色高亮块从上一页的按钮滑到当前按钮 */
 		function fileName(u){
 			if(!u) return '';
-			return u.split('?')[0].split('#')[0].split('/').pop();
+			var s=u.split('?')[0].split('#')[0];
+			if(s.charAt(s.length-1)==='/') return 'index.html';
+			return s.split('/').pop();
 		}
 		function indexFromReferrer(){
 			var ref=document.referrer;
