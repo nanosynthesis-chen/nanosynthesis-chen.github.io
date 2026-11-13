@@ -15,6 +15,7 @@ function initNavs(){
 	var siteNav=document.querySelector('.site-nav');
 	var header=document.querySelector('.site-header');
 	var navs=[];
+	var flying=false;
 	if(faculty) navs.push({el:faculty,key:'faculty',activeClass:'present',sticky:true});
 	if(album) navs.push({el:album,key:'album',activeClass:'IAS',sticky:true});
 	if(siteNav) navs.push({el:siteNav,key:'site',activeClass:'active',sticky:false});
@@ -101,24 +102,34 @@ function initNavs(){
 
 		nav.appendChild(pill);
 		nav.className += ' nav-flying';
+		flying=true;
 
-		/* 强制回流后再移动到目标位置，触发过渡 */
-		void pill.offsetWidth;
-		pill.style.left=(rNew.left-navRect.left)+'px';
-		pill.style.top=(rNew.top-navRect.top)+'px';
-		pill.style.width=rNew.width+'px';
-		pill.style.height=rNew.height+'px';
+		/* 等浏览器把起始状态画出来之后再移动，否则页面首帧渲染慢时动画会直接跳过 */
+		function go(){
+			document.documentElement.className = document.documentElement.className.replace(' nav-pending','');
+			pill.style.left=(rNew.left-navRect.left)+'px';
+			pill.style.top=(rNew.top-navRect.top)+'px';
+			pill.style.width=rNew.width+'px';
+			pill.style.height=rNew.height+'px';
+		}
+		if(window.requestAnimationFrame){
+			requestAnimationFrame(function(){ requestAnimationFrame(go); });
+		}else{
+			setTimeout(go, 40);
+		}
 
 		setTimeout(function(){
 			if(pill.parentNode) pill.parentNode.removeChild(pill);
 			nav.className = nav.className.replace(' nav-flying','');
-		}, dur*1000+120);
+		}, dur*1000+220);
 	}
 
 	for(var k=0;k<navs.length;k++){ initNav(navs[k]); }
 
-	/* 解除高亮锁定 */
-	document.documentElement.className = document.documentElement.className.replace(' nav-pending','');
+	/* 没有动画时立即解除高亮锁定 */
+	if(!flying){
+		document.documentElement.className = document.documentElement.className.replace(' nav-pending','');
+	}
 }
 
 if(document.readyState === 'loading'){
