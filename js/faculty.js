@@ -2,6 +2,19 @@ window.onload=function ()
 {
 		
 	var faculty=document.getElementById("faculty");
+	
+	/* ===== 教师导航栏吸顶：top 跟随顶部 header 实际高度（优先执行） ===== */
+	try{
+		var header = document.querySelector('.site-header');
+		function setFacultyTop(){
+			var h = header ? header.offsetHeight : 78;
+			if(faculty) faculty.style.top = h + 'px';
+		}
+		setFacultyTop();
+		window.addEventListener('resize', setFacultyTop);
+	}catch(e){}
+	/* ===== 教师导航栏吸顶 END ===== */
+	
 	var subGroupe=document.getElementById("subGroupe");
 	var facArr=faculty.getElementsByTagName("a");
 	var subArr=subGroupe.getElementsByTagName("div");
