@@ -141,7 +141,7 @@ function initNavs(){
 			if(e.target!==pill) return;
 			if(e.propertyName==='left' || e.propertyName==='width') arrive();
 		}, false);
-		setTimeout(arrive, dur*1000+260);
+		setTimeout(arrive, dur*1000+120);
 	}
 
 	for(var k=0;k<navs.length;k++){ initNav(navs[k]); }

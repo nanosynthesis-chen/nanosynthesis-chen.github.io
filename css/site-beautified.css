@@ -299,12 +299,13 @@ a:hover{
 .nav-flying a.active,
 .nav-pending .site-nav a.active{
     background:transparent !important;
-    color:var(--primary) !important;
+    /* 滑动过程中用正文色而不是绿色：高亮块盖上来时文字依然可见，到位后再变白 */
+    color:var(--text) !important;
     box-shadow:none !important;
 }
 .nav-flying a.active .nav-sub,
 .nav-pending .site-nav a.active .nav-sub{
-    color:var(--primary-2) !important;
+    color:var(--muted) !important;
 }
 .nav-pending #faculty a.present,
 .nav-pending #album a.IAS{
