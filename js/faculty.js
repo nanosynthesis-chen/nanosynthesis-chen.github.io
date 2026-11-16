@@ -120,10 +120,28 @@ function initNavs(){
 			setTimeout(go, 40);
 		}
 
-		setTimeout(function(){
-			if(pill.parentNode) pill.parentNode.removeChild(pill);
+		/* 高亮块到达终点后，恢复目标按钮的白色文字并置于高亮块上层，
+		   否则绿字压在绿色块上会看不见字 */
+		var arrived=false;
+		function arrive(){
+			if(arrived) return;
+			arrived=true;
+			/* 关掉颜色过渡，避免到位后还有一小段绿字压在绿底上 */
+			var prevTrans=links[cur].style.transition;
+			links[cur].style.transition='none';
 			nav.className = nav.className.replace(' nav-flying','');
-		}, dur*1000+220);
+			links[cur].style.zIndex='2';
+			setTimeout(function(){
+				if(pill.parentNode) pill.parentNode.removeChild(pill);
+				links[cur].style.zIndex='';
+				links[cur].style.transition=prevTrans;
+			}, 140);
+		}
+		pill.addEventListener('transitionend', function(e){
+			if(e.target!==pill) return;
+			if(e.propertyName==='left' || e.propertyName==='width') arrive();
+		}, false);
+		setTimeout(arrive, dur*1000+260);
 	}
 
 	for(var k=0;k<navs.length;k++){ initNav(navs[k]); }
