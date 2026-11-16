@@ -48,11 +48,12 @@ function initNavs(){
 		}, false);
 
 		/* 绿色高亮块从上一页的按钮滑到当前按钮 */
+		/* Cloudflare Pages 会把 /chy.html 重写成 /chy，匹配时统一去掉 .html 后缀 */
 		function fileName(u){
 			if(!u) return '';
 			var s=u.split('?')[0].split('#')[0];
-			if(s.charAt(s.length-1)==='/') return 'index.html';
-			return s.split('/').pop();
+			if(s.charAt(s.length-1)==='/') return 'index';
+			return s.split('/').pop().replace(/\.html?$/i,'');
 		}
 		function indexFromReferrer(){
 			var ref=document.referrer;
