@@ -104,6 +104,7 @@ function initNavs(){
 		nav.appendChild(pill);
 		nav.className += ' nav-flying';
 		flying=true;
+		window.__navAnimated=true;
 
 		/* 等浏览器把起始状态画出来之后再移动，否则页面首帧渲染慢时动画会直接跳过 */
 		function go(){
@@ -138,6 +139,11 @@ if(document.readyState === 'loading'){
 }else{
 	initNavs();
 }
+
+/* 个别页面 DOMContentLoaded 时样式/布局尚未就绪会导致动画被跳过，加载完成后兜底重试一次 */
+window.addEventListener('load', function(){
+	if(!window.__navAnimated){ initNavs(); }
+}, false);
 
 window.onload=function ()
 {
