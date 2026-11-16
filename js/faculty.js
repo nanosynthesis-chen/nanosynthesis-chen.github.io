@@ -48,12 +48,15 @@ function initNavs(){
 		}, false);
 
 		/* 绿色高亮块从上一页的按钮滑到当前按钮 */
-		/* Cloudflare Pages 会把 /chy.html 重写成 /chy，匹配时统一去掉 .html 后缀 */
+		/* Cloudflare Pages 会把 /chy.html 重写成 /chy，匹配时统一去掉 .html 后缀。
+		   尾部斜杠（如 /chy/）也要正确识别为 chy */
 		function fileName(u){
 			if(!u) return '';
 			var s=u.split('?')[0].split('#')[0];
-			if(s.charAt(s.length-1)==='/') return 'index';
-			return s.split('/').pop().replace(/\.html?$/i,'');
+			s=s.replace(/\/+$/, '');   /* 去掉尾部一个或多个斜杠 */
+			if(!s || s.charAt(s.length-1)==='/') return 'index';
+			var n=s.split('/').pop();
+			return n ? n.replace(/\.html?$/i,'') : 'index';
 		}
 		function indexFromReferrer(){
 			var ref=document.referrer;
@@ -66,15 +69,21 @@ function initNavs(){
 		}
 
 		var prevIdx=-1;
+		var nameMatched=false;
 		if(document.referrer){
 			prevIdx=indexFromReferrer();
-			if(prevIdx<0) return;   /* 来源页不在该导航中，不做动画 */
-		}else{
+			if(prevIdx>=0){ nameMatched=true; }
+		}
+		/* referrer 匹配失败时 fallback 到 window.name */
+		if(!nameMatched){
 			var prev=null;
 			try{ prev = window.name ? JSON.parse(window.name) : null; }catch(err){ prev=null; }
-			if(!prev || prev.nav!==item.key || typeof prev.index!=='number') return;
-			prevIdx=prev.index;
+			if(prev && prev.nav===item.key && typeof prev.index==='number'){
+				prevIdx=prev.index;
+				nameMatched=true;
+			}
 		}
+		if(!nameMatched || prevIdx<0) return;
 
 		var cur=-1;
 		for(var j=0;j<links.length;j++){
@@ -89,26 +98,32 @@ function initNavs(){
 		if(!rOld.width || !rNew.width) return;
 
 		var pill=document.createElement('div');
-		pill.className='nav-fly-pill' + (item.key==='site' ? ' nav-fly-pill-site' : '');
+		pill.className='nav-fly-pill nav-fly-pill-' + item.key;
 		pill.style.left=(rOld.left-navRect.left)+'px';
 		pill.style.top=(rOld.top-navRect.top)+'px';
 		pill.style.width=rOld.width+'px';
 		pill.style.height=rOld.height+'px';
+		pill.style.opacity='0';   /* 初始隐藏，避免突兀出现 */
 
-		/* 按位移距离换算时长，让三个导航栏的滑动速度保持一致
-		   （以顶部主导航一格（约 100px / 0.62s）的速度为基准） */
+		/* 按位移距离换算时长，让三个导航栏的滑动速度保持一致。
+		   位置过渡用 dur，opacity 保持快速（0.16s） */
 		var dist=Math.abs((rNew.left+rNew.width/2)-(rOld.left+rOld.width/2));
-		var dur=Math.max(0.45, Math.min(1.35, dist*0.0062));
-		pill.style.transitionDuration=dur+'s';
+		var dur=Math.max(0.3, Math.min(0.9, dist*0.0045));
+		pill.style.transition = 'left ' + dur + 's cubic-bezier(0.16,0.84,0.3,1), '
+			+ 'top ' + dur + 's cubic-bezier(0.16,0.84,0.3,1), '
+			+ 'width ' + dur + 's cubic-bezier(0.16,0.84,0.3,1), '
+			+ 'height ' + dur + 's cubic-bezier(0.16,0.84,0.3,1), '
+			+ 'opacity 0.16s ease-out';
 
 		nav.appendChild(pill);
-		nav.className += ' nav-flying';
+		nav.className += ' nav-flying';   /* 触发 CSS 覆盖规则：目标按钮透明底+深灰字 */
 		flying=true;
 		window.__navAnimated=true;
 
 		/* 等浏览器把起始状态画出来之后再移动，否则页面首帧渲染慢时动画会直接跳过 */
 		function go(){
 			document.documentElement.className = document.documentElement.className.replace(' nav-pending','');
+			pill.style.opacity='1';   /* 开始飞前淡入 */
 			pill.style.left=(rNew.left-navRect.left)+'px';
 			pill.style.top=(rNew.top-navRect.top)+'px';
 			pill.style.width=rNew.width+'px';
@@ -120,28 +135,22 @@ function initNavs(){
 			setTimeout(go, 40);
 		}
 
-		/* 高亮块到达终点后，恢复目标按钮的白色文字并置于高亮块上层，
-		   否则绿字压在绿色块上会看不见字 */
+		/* 到达终点：移除 nav-flying 让按钮恢复正常绿底白字，pill 淡出删除 */
 		var arrived=false;
 		function arrive(){
 			if(arrived) return;
 			arrived=true;
-			/* 关掉颜色过渡，避免到位后还有一小段绿字压在绿底上 */
-			var prevTrans=links[cur].style.transition;
-			links[cur].style.transition='none';
-			nav.className = nav.className.replace(' nav-flying','');
-			links[cur].style.zIndex='2';
+			nav.className = nav.className.replace(' nav-flying','');   /* CSS 覆盖规则失效，按钮恢复绿底白字 */
+			pill.style.opacity='0';
 			setTimeout(function(){
 				if(pill.parentNode) pill.parentNode.removeChild(pill);
-				links[cur].style.zIndex='';
-				links[cur].style.transition=prevTrans;
-			}, 140);
+			}, 160);
 		}
 		pill.addEventListener('transitionend', function(e){
 			if(e.target!==pill) return;
 			if(e.propertyName==='left' || e.propertyName==='width') arrive();
 		}, false);
-		setTimeout(arrive, dur*1000+120);
+		setTimeout(arrive, dur*1000+80);
 	}
 
 	for(var k=0;k<navs.length;k++){ initNav(navs[k]); }
@@ -162,31 +171,3 @@ if(document.readyState === 'loading'){
 window.addEventListener('load', function(){
 	if(!window.__navAnimated){ initNavs(); }
 }, false);
-
-window.onload=function ()
-{
-	var faculty=document.getElementById("faculty");
-	var subGroupe=document.getElementById("subGroupe");
-	if(!faculty || !subGroupe) return;
-	var facArr=faculty.getElementsByTagName("a");
-	var subArr=subGroupe.getElementsByTagName("div");
-
-	function bind(obj,eventstr,callback){
-		if(obj.addEventListener){
-			obj.addEventListener(eventstr,callback,false);
-		}else{
-			obj.attachEvent("on"+eventStr,callback);
-		}
-	}
-
-	for(var i=0; i<facArr.length; i++)
-	{
-		bind(facArr[i], "click", function(){
-			for(var j=0; j<facArr.length; j++)
-			{
-				facArr[j].style.backgroundColor="#EBEBEB";
-			};
-			this.style.backgroundColor="#11719E";
-		});
-	}
-}

@@ -282,35 +282,42 @@ a:hover{
     border-radius:999px;
     background:var(--primary);
     pointer-events:none;
+    opacity:1;
     transition:left .62s cubic-bezier(.16,.84,.3,1),
                top .62s cubic-bezier(.16,.84,.3,1),
                width .62s cubic-bezier(.16,.84,.3,1),
-               height .62s cubic-bezier(.16,.84,.3,1);
+               height .62s cubic-bezier(.16,.84,.3,1),
+               opacity .16s ease-out;
+    box-shadow:0 6px 18px rgba(46,111,97,.35),
+               0 2px 6px rgba(46,111,97,.18);
+    will-change:left, top, width, height;
 }
+/* 三个导航栏的 pill 共用圆角，只有 site 导航栏用矩形圆角 */
 .nav-fly-pill-site{
     border-radius:12px;
-    box-shadow:0 6px 16px rgba(46,111,97,.25);
 }
-.nav-flying a.present,
-.nav-flying a.IAS{
-    background:transparent !important;
-    color:var(--primary) !important;
+.nav-fly-pill-faculty,
+.nav-fly-pill-album{
+    border-radius:999px;
 }
-.nav-flying a.active,
-.nav-pending .site-nav a.active{
+/* 动画期间：目标按钮透明底（pill 成唯一绿色块）+ 深灰字（在白底导航栏和绿底 pill 上都有对比）。
+   特异性必须赢原始规则：#faculty a.present → #faculty.nav-flying a.present（多一个 class）
+   颜色用 var(--text)=#24313a 深灰，比白色安全（白字在白底导航栏上会消失） */
+#faculty.nav-flying a.present,
+#album.nav-flying a.IAS,
+.site-nav.nav-flying a.active{
     background:transparent !important;
-    /* 滑动过程中用正文色而不是绿色：高亮块盖上来时文字依然可见，到位后再变白 */
     color:var(--text) !important;
+    transition:none !important;
     box-shadow:none !important;
 }
-.nav-flying a.active .nav-sub,
-.nav-pending .site-nav a.active .nav-sub{
-    color:var(--muted) !important;
-}
-.nav-pending #faculty a.present,
-.nav-pending #album a.IAS{
+html.nav-pending #faculty a.present,
+html.nav-pending #album a.IAS,
+html.nav-pending .site-nav a.active{
     background:transparent !important;
-    color:var(--primary) !important;
+    color:var(--text) !important;
+    transition:none !important;
+    box-shadow:none !important;
 }
 
 .faculty ul,
