@@ -585,8 +585,8 @@ html.nav-pending .site-nav a.active{
 }
 
 .img_box{
-    width:100% !important;
-    max-width:100%;
+    width:fit-content !important;
+    max-width:100% !important;
     height:auto !important;
     margin:18px auto 0 !important;
     border-radius:14px;
@@ -596,11 +596,13 @@ html.nav-pending .site-nav a.active{
 }
 
 .img_box img{
-    width:100% !important;
-    height:220px !important;
+    width:auto !important;
+    max-width:100% !important;
+    height:auto !important;
     max-height:220px !important;
-    object-fit:cover !important;
+    object-fit:contain !important;
     display:block;
+    margin:0 auto;
     border-radius:14px !important;
 }
 
@@ -914,6 +916,7 @@ div[style*="position: fixed"]{
     background:rgba(18,30,27,.88);
     backdrop-filter:blur(6px);
     cursor:zoom-out;
+    touch-action:none;
 }
 
 .ns-lightbox.open{
@@ -930,7 +933,8 @@ div[style*="position: fixed"]{
 }
 
 .ns-lightbox img{
-    height:70vh;
+    height:auto;
+    max-height:88vh;
     max-width:92vw;
     width:auto;
     object-fit:contain;
@@ -938,7 +942,8 @@ div[style*="position: fixed"]{
     box-shadow:0 20px 60px rgba(0,0,0,.35);
     user-select:none;
     -webkit-user-drag:none;
-    pointer-events:none;
+    cursor:zoom-in;
+    will-change:transform;
 }
 
 .ns-lightbox-close{
@@ -1130,7 +1135,8 @@ a.contact-value:hover{
 }
 
 .member-photo img{
-    width:100%;
+    width:auto;
+    max-width:100%;
     height:auto;
     max-height:220px;
     object-fit:contain;
