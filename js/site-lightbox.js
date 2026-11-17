@@ -60,6 +60,16 @@
             if (next === scale) {
                 return;
             }
+            var rect = img.getBoundingClientRect();
+            if (rect.width && rect.height) {
+                var anchorX = Math.min(Math.max(window.innerWidth / 2, rect.left), rect.right);
+                var anchorY = Math.min(Math.max(window.innerHeight / 2, rect.top), rect.bottom);
+                var baseX = rect.left + rect.width / 2 - tx;
+                var baseY = rect.top + rect.height / 2 - ty;
+                var k = next / scale;
+                tx = k * tx + (1 - k) * (anchorX - baseX);
+                ty = k * ty + (1 - k) * (anchorY - baseY);
+            }
             scale = next;
             if (scale === 1) {
                 tx = 0;
