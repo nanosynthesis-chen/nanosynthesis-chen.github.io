@@ -925,18 +925,19 @@ div[style*="position: fixed"]{
 
 .ns-lightbox-inner{
     position:relative;
-    max-width:92vw;
-    max-height:92vh;
+    width:80vw;
+    max-width:1000px;
+    height:66vh;
     display:flex;
     align-items:center;
     justify-content:center;
 }
 
 .ns-lightbox img{
-    height:auto;
-    max-height:88vh;
-    max-width:92vw;
+    max-width:100%;
+    max-height:100%;
     width:auto;
+    height:auto;
     object-fit:contain;
     border-radius:14px;
     box-shadow:0 20px 60px rgba(0,0,0,.35);
@@ -944,22 +945,6 @@ div[style*="position: fixed"]{
     -webkit-user-drag:none;
     cursor:zoom-in;
     will-change:transform;
-}
-
-.ns-lightbox-close{
-    position:absolute;
-    top:-16px;
-    right:-16px;
-    width:42px;
-    height:42px;
-    border:none;
-    border-radius:50%;
-    background:#ffffff;
-    color:#243c36;
-    font-size:28px;
-    line-height:1;
-    cursor:pointer;
-    box-shadow:var(--shadow-sm);
 }
 
 /* ==========================================================================

@@ -38,16 +38,10 @@
         overlay.id = "ns-lightbox";
         overlay.className = "ns-lightbox";
         overlay.setAttribute("role", "dialog");
-        overlay.innerHTML = '<div class="ns-lightbox-inner"><img alt=""/><button class="ns-lightbox-close" aria-label="关闭">×</button></div>';
+        overlay.innerHTML = '<div class="ns-lightbox-inner"><img alt=""/></div>';
         document.body.appendChild(overlay);
 
         overlay.addEventListener("click", function (e) {
-            var target = e.target;
-            var isClose = target && target.classList && target.classList.contains("ns-lightbox-close");
-            var isBackdrop = target === overlay;
-            if (!isClose && !isBackdrop) {
-                return;
-            }
             if (moved) {
                 moved = false;
                 return;
@@ -61,12 +55,6 @@
                 return;
             }
             e.preventDefault();
-            var rect = img.getBoundingClientRect();
-            if (!rect.width || !rect.height) {
-                return;
-            }
-            var px = (e.clientX - rect.left) / rect.width;
-            var py = (e.clientY - rect.top) / rect.height;
             var factor = e.deltaY < 0 ? 1.18 : 1 / 1.18;
             var next = Math.max(1, Math.min(6, scale * factor));
             if (next === scale) {
@@ -76,10 +64,8 @@
             if (scale === 1) {
                 tx = 0;
                 ty = 0;
-                img.style.transformOrigin = "center center";
-            } else {
-                img.style.transformOrigin = (px * 100) + "% " + (py * 100) + "%";
             }
+            img.style.transformOrigin = "center center";
             applyTransform(img);
         }, { passive: false });
 
@@ -134,15 +120,6 @@
         overlay.addEventListener("pointerup", endDrag);
         overlay.addEventListener("pointercancel", endDrag);
 
-        overlay.addEventListener("dblclick", function (e) {
-            var img = overlay.querySelector("img");
-            if (!img) {
-                return;
-            }
-            e.preventDefault();
-            resetView(img);
-        });
-
         document.addEventListener("keydown", function (e) {
             if (e.key === "Escape") {
                 closeOverlay();
@@ -151,17 +128,47 @@
         return overlay;
     }
 
+    function fitImage(img) {
+        var inner = img && img.parentNode;
+        if (!inner || !img.naturalWidth || !img.naturalHeight) {
+            return;
+        }
+        var boxW = inner.clientWidth;
+        var boxH = inner.clientHeight;
+        if (!boxW || !boxH) {
+            return;
+        }
+        var k = Math.min(boxW / img.naturalWidth, boxH / img.naturalHeight);
+        img.style.width = Math.round(img.naturalWidth * k) + "px";
+        img.style.height = Math.round(img.naturalHeight * k) + "px";
+    }
+
     function openOverlay(src) {
         var overlay = createOverlay();
         var img = overlay.querySelector("img");
         resetView(img);
+        img.style.width = "";
+        img.style.height = "";
         img.draggable = false;
+        overlay.classList.add("open");
+        document.body.style.overflow = "hidden";
+        img.onload = function () {
+            fitImage(img);
+        };
         if (img.getAttribute("src") !== src) {
             img.setAttribute("src", src);
         }
-        overlay.classList.add("open");
-        document.body.style.overflow = "hidden";
+        if (img.complete && img.naturalWidth) {
+            fitImage(img);
+        }
     }
+
+    window.addEventListener("resize", function () {
+        var overlay = document.getElementById("ns-lightbox");
+        if (overlay && overlay.classList.contains("open")) {
+            fitImage(overlay.querySelector("img"));
+        }
+    }, false);
 
     function closeOverlay() {
         var overlay = document.getElementById("ns-lightbox");
