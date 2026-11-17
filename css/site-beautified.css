@@ -416,8 +416,8 @@ html.nav-pending .site-nav a.active{
    ========================================================================== */
 #banner.banner{
     width:100%;
-    max-width:1400px;
-    height:620px;
+    max-width:1200px;
+    height:540px;
     margin:0 auto;
     border-radius:14px;
     overflow:hidden;
@@ -429,7 +429,7 @@ html.nav-pending .site-nav a.active{
 .imgList{
     position:relative !important;
     width:100% !important;
-    height:620px !important;
+    height:540px !important;
     margin:0;
     padding:0;
     list-style:none;
@@ -1725,10 +1725,10 @@ span[style*="position: fixed"],
         max-width: 1460px;
     }
     #banner.banner {
-        max-width: 1600px;
-        height: clamp(620px, 66vh, 940px);
+        max-width: 1400px;
+        height: clamp(540px, 58vh, 820px);
     }
     #banner .imgList {
-        height: clamp(620px, 66vh, 940px) !important;
+        height: clamp(540px, 58vh, 820px) !important;
     }
 }

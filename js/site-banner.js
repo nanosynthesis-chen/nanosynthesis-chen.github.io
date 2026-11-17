@@ -22,7 +22,7 @@
         if (timer) {
             clearInterval(timer);
         }
-        timer = setInterval(next, 4000);
+        timer = setInterval(next, 5000);
     }
     show(0);
     start();
